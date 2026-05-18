@@ -2,14 +2,28 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Goal 24</title>
+  <title>المباريات</title>
 </head>
 
 <body>
 
 <h1>⚽ مباريات اليوم</h1>
 
-<div id="matches">لسه مفيش بيانات</div>
+<div id="matches">جاري التحميل...</div>
+
+<script>
+fetch("matches.json")
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("matches").innerHTML =
+      data.map(m => `
+        <div style="padding:10px;border:1px solid #ddd;margin:5px">
+          ⚽ ${m.home} vs ${m.away}<br>
+          ⏰ ${m.time}
+        </div>
+      `).join("");
+  });
+</script>
 
 </body>
 </html>
