@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>تفاصيل المباراة</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      background: #0f172a;
+      color: white;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .box {
+      max-width: 700px;
+      margin: auto;
+      background: #1e293b;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.4);
+    }
+
+    h1 {
+      color: #22c55e;
+    }
+
+    .teams {
+      font-size: 22px;
+      margin: 15px 0;
+    }
+
+    .info {
+      color: #38bdf8;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="box">
+  <h1>⚽ تفاصيل المباراة</h1>
+
+  <div id="content">جاري التحميل...</div>
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
+
+async function loadMatch() {
+  try {
+    const res = await fetch(
+      `https://www.thesportsdb.com/api/v1/json/3/lookupevent.php?id=${id}`
+    );
+
+    const data = await res.json();
+    const m = data.events[0];
+
+    document.getElementById("content").innerHTML = `
+      <div class="teams">
+        ⚽ ${m.strHomeTeam} vs ${m.strAwayTeam}
+      </div>
+
+      <div class="info">🏆 ${m.strLeague}</div>
+      <div class="info">📅 ${m.dateEvent}</div>
+      <div class="info">⏰ ${m.strTime || "غير محدد"}</div>
+      <div class="info">📍 ${m.strVenue || "غير معروف"}</div>
+    `;
+
+  } catch (e) {
+    document.getElementById("content").innerHTML = "خطأ في تحميل البيانات";
+  }
+}
+
+loadMatch();
+</script>
+
+</body>
+</html>
