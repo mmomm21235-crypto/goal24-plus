@@ -57,34 +57,65 @@
 </select> 
 <div class="container" id="matches">Loading...</div>
 
-<script>
+<<script>
+let allMatches = [];
+
 async function loadMatches() {
-  try {
-    const today = new Date().toISOString().slice(0,10);
+  const today = new Date().toISOString().slice(0,10);
 
-    const res = await fetch(
-      `https://www.thesportsdb.com/api/v1/json/3/eventsday.php?d=${today}&s=Soccer`
-    );
+  const res = await fetch(
+    `https://www.thesportsdb.com/api/v1/json/3/eventsday.php?d=${today}&s=Soccer`
+  );
 
-    const data = await res.json();
+  const data = await res.json();
 
-    if (!data.events) {
-      document.getElementById("matches").innerHTML = "لا توجد مباريات اليوم";
-      return;
-    }
+  allMatches = data.events || [];
 
-    document.getElementById("matches").innerHTML =
-      data.events.map(m => `
-        <div class="card">
-          <div class="league">🏆 ${m.strLeague}</div>
-          <div class="teams">⚽ ${m.strHomeTeam} vs ${m.strAwayTeam}</div>
-          <div class="time">⏰ ${m.strTime || "غير محدد"}</div>
-        </div>
-      `).join("");
+  setupFilters();
+  render(allMatches);
+}
 
-  } catch (e) {
-    document.getElementById("matches").innerHTML = "حصل خطأ في تحميل المباريات";
-  }
+function setupFilters() {
+  const leagues = [...new Set(allMatches.map(m => m.strLeague))];
+  const select = document.getElementById("leagueFilter");
+
+  leagues.forEach(l => {
+    let opt = document.createElement("option");
+    opt.value = l;
+    opt.textContent = l;
+    select.appendChild(opt);
+  });
+
+  select.addEventListener("change", filterMatches);
+  document.getElementById("search").addEventListener("input", filterMatches);
+}
+
+function filterMatches() {
+  let searchValue = document.getElementById("search").value.toLowerCase();
+  let leagueValue = document.getElementById("leagueFilter").value;
+
+  let filtered = allMatches.filter(m => {
+    let leagueMatch = leagueValue === "all" || m.strLeague === leagueValue;
+
+    let searchMatch =
+      m.strHomeTeam.toLowerCase().includes(searchValue) ||
+      m.strAwayTeam.toLowerCase().includes(searchValue);
+
+    return leagueMatch && searchMatch;
+  });
+
+  render(filtered);
+}
+
+function render(matches) {
+  document.getElementById("matches").innerHTML =
+    matches.map(m => `
+      <div style="padding:10px;border:1px solid #ddd;margin:5px">
+        <b>${m.strLeague}</b><br>
+        ⚽ ${m.strHomeTeam} vs ${m.strAwayTeam}<br>
+        ⏰ ${m.strTime || "غير محدد"}
+      </div>
+    `).join("");
 }
 
 loadMatches();
