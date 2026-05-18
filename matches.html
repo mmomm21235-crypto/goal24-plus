@@ -1,15 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>المباريات</title>
+  <title>Goal 24 - المباريات</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      background: #0f172a;
+      color: white;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #22c55e;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .card {
+      background: #1e293b;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+
+    .league {
+      color: #facc15;
+      font-size: 14px;
+    }
+
+    .teams {
+      font-size: 18px;
+      margin: 5px 0;
+    }
+
+    .time {
+      color: #38bdf8;
+    }
+  </style>
 </head>
 
 <body>
 
 <h1>⚽ مباريات اليوم</h1>
 
-<div id="matches">جاري تحميل المباريات...</div>
+<div class="container" id="matches">Loading...</div>
 
 <script>
 async function loadMatches() {
@@ -29,15 +71,15 @@ async function loadMatches() {
 
     document.getElementById("matches").innerHTML =
       data.events.map(m => `
-        <div style="padding:10px;border:1px solid #ddd;margin:5px">
-          🏆 ${m.strLeague}<br>
-          ⚽ ${m.strHomeTeam} vs ${m.strAwayTeam}<br>
-          ⏰ ${m.strTime || "غير محدد"}
+        <div class="card">
+          <div class="league">🏆 ${m.strLeague}</div>
+          <div class="teams">⚽ ${m.strHomeTeam} vs ${m.strAwayTeam}</div>
+          <div class="time">⏰ ${m.strTime || "غير محدد"}</div>
         </div>
       `).join("");
 
   } catch (e) {
-    document.getElementById("matches").innerHTML = "حصل خطأ في تحميل البيانات";
+    document.getElementById("matches").innerHTML = "حصل خطأ في تحميل المباريات";
   }
 }
 
