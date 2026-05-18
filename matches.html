@@ -18,6 +18,14 @@
       color: #22c55e;
     }
 
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 8px;
+      border: none;
+    }
+
     .container {
       max-width: 800px;
       margin: auto;
@@ -29,6 +37,12 @@
       margin: 10px 0;
       border-radius: 12px;
       box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .card:hover {
+      transform: scale(1.02);
     }
 
     .league {
@@ -43,52 +57,23 @@
 
     .time {
       color: #38bdf8;
-    } body {
-  font-family: Arial;
-  background: #0f172a;
-  color: white;
-  margin: 0;
-  padding: 20px;
-}
-
-h1 {
-  text-align: center;
-  color: #22c55e;
-}
-
-input, select {
-  width: 100%;
-  padding: 10px;
-  margin: 5px 0;
-  border-radius: 8px;
-  border: none;
-}
-
-.card {
-  background: #1e293b;
-  padding: 15px;
-  margin: 10px 0;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
-}
-
-.card b {
-  color: #facc15;
-}
+    }
   </style>
 </head>
 
 <body>
 
 <h1>⚽ مباريات اليوم</h1>
+
 <input id="search" placeholder="ابحث عن فريق..." />
 
 <select id="leagueFilter">
   <option value="all">كل الدوريات</option>
-</select> 
+</select>
+
 <div class="container" id="matches">Loading...</div>
 
-<<script>
+<script>
 let allMatches = [];
 
 async function loadMatches() {
@@ -104,6 +89,60 @@ async function loadMatches() {
 
   setupFilters();
   render(allMatches);
+}
+
+function setupFilters() {
+  const leagues = [...new Set(allMatches.map(m => m.strLeague))];
+  const select = document.getElementById("leagueFilter");
+
+  leagues.forEach(l => {
+    let opt = document.createElement("option");
+    opt.value = l;
+    opt.textContent = l;
+    select.appendChild(opt);
+  });
+
+  select.addEventListener("change", filterMatches);
+  document.getElementById("search").addEventListener("input", filterMatches);
+}
+
+function filterMatches() {
+  let searchValue = document.getElementById("search").value.toLowerCase();
+  let leagueValue = document.getElementById("leagueFilter").value;
+
+  let filtered = allMatches.filter(m => {
+    let leagueMatch = leagueValue === "all" || m.strLeague === leagueValue;
+
+    let searchMatch =
+      (m.strHomeTeam || "").toLowerCase().includes(searchValue) ||
+      (m.strAwayTeam || "").toLowerCase().includes(searchValue);
+
+    return leagueMatch && searchMatch;
+  });
+
+  render(filtered);
+}
+
+function openMatch(id) {
+  window.location.href = "match.html?id=" + id;
+}
+
+function render(matches) {
+  document.getElementById("matches").innerHTML =
+    matches.map(m => `
+      <div class="card" onclick="openMatch('${m.idEvent}')">
+        <div class="league">🏆 ${m.strLeague}</div>
+        <div class="teams">⚽ ${m.strHomeTeam} vs ${m.strAwayTeam}</div>
+        <div class="time">⏰ ${m.strTime || "غير محدد"}</div>
+      </div>
+    `).join("");
+}
+
+loadMatches();
+</script>
+
+</body>
+</html>  render(allMatches);
 }
 
 function setupFilters() {
