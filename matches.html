@@ -9,20 +9,39 @@
 
 <h1>⚽ مباريات اليوم</h1>
 
-<div id="matches">جاري التحميل...</div>
+<div id="matches">جاري تحميل المباريات...</div>
 
 <script>
-fetch("matches.json")
-  .then(res => res.json())
-  .then(data => {
+async function loadMatches() {
+  try {
+    const today = new Date().toISOString().slice(0,10);
+
+    const res = await fetch(
+      `https://www.thesportsdb.com/api/v1/json/3/eventsday.php?d=${today}&s=Soccer`
+    );
+
+    const data = await res.json();
+
+    if (!data.events) {
+      document.getElementById("matches").innerHTML = "لا توجد مباريات اليوم";
+      return;
+    }
+
     document.getElementById("matches").innerHTML =
-      data.map(m => `
+      data.events.map(m => `
         <div style="padding:10px;border:1px solid #ddd;margin:5px">
-          ⚽ ${m.home} vs ${m.away}<br>
-          ⏰ ${m.time}
+          🏆 ${m.strLeague}<br>
+          ⚽ ${m.strHomeTeam} vs ${m.strAwayTeam}<br>
+          ⏰ ${m.strTime || "غير محدد"}
         </div>
       `).join("");
-  });
+
+  } catch (e) {
+    document.getElementById("matches").innerHTML = "حصل خطأ في تحميل البيانات";
+  }
+}
+
+loadMatches();
 </script>
 
 </body>
