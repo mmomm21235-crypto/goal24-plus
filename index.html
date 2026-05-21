@@ -1,751 +1,955 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-<head> <meta name="google-site-verification" content="SAHILacznfUWreTXSTU44b_jSKLm3QtVd6n0D7liZwI" /> 
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GOAL24+ | Football News</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
-
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: 'Tajawal', sans-serif;
-      background: #080808;
-      color: #fff;
-      overflow-x: hidden;
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background: radial-gradient(circle at top right, rgba(180,0,0,.15), transparent 30%),
-                  radial-gradient(circle at bottom left, rgba(255,0,0,.08), transparent 35%);
-      z-index: -1;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    img {
-      width: 100%;
-      display: block;
-    }
-
-    .container {
-      width: 90%;
-      max-width: 1400px;
-      margin: auto;
-    }
-
-    /* NAVBAR */
-
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 999;
-      backdrop-filter: blur(10px);
-      background: rgba(0,0,0,.85);
-      border-bottom: 1px solid rgba(255,255,255,.08);
-    }
-
-    .nav-content {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 18px 0;
-    }
-
-    .logo {
-      font-size: 2rem;
-      font-weight: 800;
-      color: #ff1e1e;
-      letter-spacing: 1px;
-    }
-
-    .logo span {
-      color: white;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 25px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-weight: 500;
-      transition: .3s;
-      position: relative;
-    }
-
-    .nav-links a::after {
-      content: "";
-      position: absolute;
-      bottom: -8px;
-      right: 0;
-      width: 0;
-      height: 2px;
-      background: #ff1e1e;
-      transition: .3s;
-    }
-
-    .nav-links a:hover::after {
-      width: 100%;
-    }
-
-    .nav-links a:hover {
-      color: #ff1e1e;
-    }
-
-    .menu-btn {
-      display: none;
-      font-size: 2rem;
-      cursor: pointer;
-    }
-
-    /* HERO */
-
-    .hero {
-      height: 90vh;
-      display: flex;
-      align-items: center;
-      background:
-      linear-gradient(to left, rgba(0,0,0,.8), rgba(0,0,0,.5)),
-      url('https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=1600&auto=format&fit=crop') center/cover;
-      position: relative;
-    }
-
-    .hero-content {
-      max-width: 700px;
-      animation: fadeUp 1s ease;
-    }
-
-    .hero h1 {
-      font-size: 4rem;
-      margin-bottom: 20px;
-      line-height: 1.2;
-    }
-
-    .hero h1 span {
-      color: #ff1e1e;
-    }
-
-    .hero p {
-      color: #d0d0d0;
-      font-size: 1.2rem;
-      line-height: 1.8;
-      margin-bottom: 30px;
-    }
-
-    .hero-btns {
-      display: flex;
-      gap: 15px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      padding: 14px 28px;
-      border-radius: 50px;
-      font-weight: 700;
-      transition: .3s;
-      border: none;
-      cursor: pointer;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #ff0000, #b10000);
-      color: white;
-      box-shadow: 0 10px 30px rgba(255,0,0,.25);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-4px);
-    }
-
-    .btn-outline {
-      background: transparent;
-      border: 1px solid #ff1e1e;
-      color: #fff;
-    }
-
-    .btn-outline:hover {
-      background: #ff1e1e;
-    }
-
-    /* SECTIONS */
-
-    section {
-      padding: 90px 0;
-    }
-
-    .section-title {
-      font-size: 2.3rem;
-      margin-bottom: 45px;
-      position: relative;
-      display: inline-block;
-    }
-
-    .section-title::after {
-      content: "";
-      position: absolute;
-      right: 0;
-      bottom: -12px;
-      width: 60%;
-      height: 4px;
-      background: linear-gradient(to left, #ff0000, transparent);
-      border-radius: 10px;
-    }
-
-    /* NEWS GRID */
-
-    .news-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 25px;
-    }
-
-    .news-card {
-      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-      border: 1px solid rgba(255,255,255,.06);
-      border-radius: 22px;
-      overflow: hidden;
-      transition: .4s;
-      position: relative;
-    }
-
-    .news-card:hover {
-      transform: translateY(-10px);
-      border-color: rgba(255,0,0,.4);
-      box-shadow: 0 15px 40px rgba(255,0,0,.12);
-    }
-
-    .news-card img {
-      height: 220px;
-      object-fit: cover;
-    }
-
-    .news-content {
-      padding: 22px;
-    }
-
-    .tag {
-      display: inline-block;
-      background: #ff1e1e;
-      color: white;
-      padding: 6px 14px;
-      border-radius: 30px;
-      font-size: .85rem;
-      margin-bottom: 14px;
-    }
-
-    .news-content h3 {
-      font-size: 1.35rem;
-      margin-bottom: 15px;
-      line-height: 1.6;
-    }
-
-    .news-content p {
-      color: #c2c2c2;
-      line-height: 1.7;
-    }
-
-    /* LIVE SCORES */
-
-    .live-wrapper {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 25px;
-    }
-
-    .live-card {
-      background: #111;
-      border-radius: 20px;
-      padding: 25px;
-      border: 1px solid rgba(255,255,255,.08);
-      transition: .3s;
-    }
-
-    .live-card:hover {
-      transform: scale(1.03);
-      border-color: #ff1e1e;
-    }
-
-    .live-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-
-    .live-dot {
-      width: 10px;
-      height: 10px;
-      background: red;
-      border-radius: 50%;
-      animation: pulse 1s infinite;
-    }
-
-    .teams {
-      text-align: center;
-      font-size: 1.2rem;
-      line-height: 2;
-      font-weight: 700;
-    }
-
-    .score {
-      font-size: 2.8rem;
-      text-align: center;
-      color: #ff1e1e;
-      margin-top: 15px;
-      font-weight: 800;
-    }
-
-    /* MATCHES */
-
-    .matches {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .match-row {
-      background: #121212;
-      border-radius: 18px;
-      padding: 22px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border: 1px solid rgba(255,255,255,.06);
-      transition: .3s;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-
-    .match-row:hover {
-      border-color: #ff1e1e;
-      transform: translateX(-5px);
-    }
-
-    .match-teams {
-      font-size: 1.2rem;
-      font-weight: 700;
-    }
-
-    .match-time {
-      color: #ff1e1e;
-      font-weight: 700;
-      font-size: 1.1rem;
-    }
-
-    /* YOUTUBE */
-
-    .videos {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 25px;
-    }
-
-    iframe {
-      width: 100%;
-      height: 230px;
-      border: none;
-      border-radius: 20px;
-    }
-
-    /* TRENDING */
-
-    .trending {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-    }
-
-    .trend {
-      background: rgba(255,0,0,.1);
-      border: 1px solid rgba(255,0,0,.3);
-      padding: 14px 20px;
-      border-radius: 50px;
-      transition: .3s;
-      cursor: pointer;
-    }
-
-    .trend:hover {
-      background: #ff1e1e;
-      transform: translateY(-3px);
-    }
-
-    /* FOOTER */
-
-    footer {
-      background: #050505;
-      padding: 60px 0 30px;
-      border-top: 1px solid rgba(255,255,255,.08);
-    }
-
-    .footer-content {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 30px;
-      margin-bottom: 40px;
-    }
-
-    .footer-box h3 {
-      margin-bottom: 18px;
-      color: #ff1e1e;
-    }
-
-    .footer-box p,
-    .footer-box li {
-      color: #bbb;
-      line-height: 2;
-      list-style: none;
-    }
-
-    .copyright {
-      text-align: center;
-      padding-top: 20px;
-      border-top: 1px solid rgba(255,255,255,.05);
-      color: #999;
-    }
-
-    /* ANIMATIONS */
-
-    @keyframes pulse {
-      0% { opacity: .4; }
-      50% { opacity: 1; }
-      100% { opacity: .4; }
-    }
-
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(40px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .fade-in {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: all 1s ease;
-    }
-
-    .fade-in.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* RESPONSIVE */
-
-    @media(max-width: 900px) {
-      .nav-links {
-        position: absolute;
-        top: 80px;
-        right: -100%;
-        flex-direction: column;
-        background: #111;
-        width: 100%;
-        padding: 30px;
-        transition: .4s;
-      }
-
-      .nav-links.active {
-        right: 0;
-      }
-
-      .menu-btn {
-        display: block;
-      }
-
-      .hero h1 {
-        font-size: 2.8rem;
-      }
-    }
-
-    @media(max-width: 600px) {
-      .hero {
-        height: 80vh;
-      }
-
-      .hero h1 {
-        font-size: 2.2rem;
-      }
-
-      .section-title {
-        font-size: 1.8rem;
-      }
-    }
-  </style>
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="google-site-verification" content="SAHILacznfUWreTXSTU44b_jSKLm3QtVd6n0D7liZwI"/>
+
+<title>GOAL24+ | Football News</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:'Tajawal',sans-serif;
+  background:#080808;
+  color:#fff;
+  overflow-x:hidden;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:
+  radial-gradient(circle at top right,rgba(180,0,0,.15),transparent 30%),
+  radial-gradient(circle at bottom left,rgba(255,0,0,.08),transparent 35%);
+  z-index:-1;
+}
+
+a{
+  text-decoration:none;
+  color:inherit;
+}
+
+img{
+  width:100%;
+  display:block;
+}
+
+.container{
+  width:90%;
+  max-width:1400px;
+  margin:auto;
+}
+
+/* NAVBAR */
+
+nav{
+  position:sticky;
+  top:0;
+  z-index:999;
+  backdrop-filter:blur(10px);
+  background:rgba(0,0,0,.88);
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.nav-content{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:18px 0;
+}
+
+.logo{
+  font-size:2rem;
+  font-weight:800;
+  color:#ff1e1e;
+}
+
+.logo span{
+  color:white;
+}
+
+.nav-links{
+  display:flex;
+  gap:25px;
+  list-style:none;
+}
+
+.nav-links a{
+  transition:.3s;
+  position:relative;
+}
+
+.nav-links a::after{
+  content:"";
+  position:absolute;
+  bottom:-8px;
+  right:0;
+  width:0;
+  height:2px;
+  background:#ff1e1e;
+  transition:.3s;
+}
+
+.nav-links a:hover::after{
+  width:100%;
+}
+
+.nav-links a:hover{
+  color:#ff1e1e;
+}
+
+.menu-btn{
+  display:none;
+  font-size:2rem;
+  cursor:pointer;
+}
+
+/* HERO */
+
+.hero{
+  min-height:90vh;
+  display:flex;
+  align-items:center;
+  background:
+  linear-gradient(to left,rgba(0,0,0,.85),rgba(0,0,0,.55)),
+  url('https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=1600&auto=format&fit=crop') center/cover;
+}
+
+.hero-content{
+  max-width:700px;
+  animation:fadeUp 1s ease;
+}
+
+.hero h1{
+  font-size:4rem;
+  line-height:1.2;
+  margin-bottom:20px;
+}
+
+.hero h1 span{
+  color:#ff1e1e;
+}
+
+.hero p{
+  color:#d0d0d0;
+  font-size:1.15rem;
+  line-height:1.9;
+  margin-bottom:30px;
+}
+
+.hero-btns{
+  display:flex;
+  gap:15px;
+  flex-wrap:wrap;
+}
+
+.btn{
+  padding:14px 28px;
+  border:none;
+  border-radius:50px;
+  cursor:pointer;
+  font-weight:700;
+  transition:.3s;
+}
+
+.btn-primary{
+  background:linear-gradient(135deg,#ff0000,#b10000);
+  color:white;
+  box-shadow:0 10px 30px rgba(255,0,0,.25);
+}
+
+.btn-primary:hover{
+  transform:translateY(-4px);
+}
+
+.btn-outline{
+  background:transparent;
+  border:1px solid #ff1e1e;
+  color:white;
+}
+
+.btn-outline:hover{
+  background:#ff1e1e;
+}
+
+/* SECTIONS */
+
+section{
+  padding:90px 0;
+}
+
+.section-title{
+  font-size:2.3rem;
+  margin-bottom:45px;
+  position:relative;
+  display:inline-block;
+}
+
+.section-title::after{
+  content:"";
+  position:absolute;
+  right:0;
+  bottom:-12px;
+  width:60%;
+  height:4px;
+  border-radius:10px;
+  background:linear-gradient(to left,#ff0000,transparent);
+}
+
+/* NEWS */
+
+.news-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:25px;
+}
+
+.news-card{
+  background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:22px;
+  overflow:hidden;
+  transition:.4s;
+}
+
+.news-card:hover{
+  transform:translateY(-10px);
+  border-color:rgba(255,0,0,.4);
+  box-shadow:0 15px 40px rgba(255,0,0,.12);
+}
+
+.news-card img{
+  height:220px;
+  object-fit:cover;
+}
+
+.news-content{
+  padding:22px;
+}
+
+.tag{
+  display:inline-block;
+  background:#ff1e1e;
+  padding:6px 14px;
+  border-radius:30px;
+  font-size:.85rem;
+  margin-bottom:14px;
+}
+
+.news-content h3{
+  font-size:1.35rem;
+  line-height:1.6;
+  margin-bottom:15px;
+}
+
+.news-content p{
+  color:#c2c2c2;
+  line-height:1.8;
+}
+
+/* LIVE */
+
+.live-wrapper{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:25px;
+}
+
+.live-card{
+  background:#111;
+  border-radius:20px;
+  padding:25px;
+  border:1px solid rgba(255,255,255,.08);
+  transition:.3s;
+}
+
+.live-card:hover{
+  transform:scale(1.03);
+  border-color:#ff1e1e;
+}
+
+.live-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+.live-dot{
+  width:10px;
+  height:10px;
+  background:red;
+  border-radius:50%;
+  animation:pulse 1s infinite;
+}
+
+.teams{
+  text-align:center;
+  line-height:2;
+  font-size:1.2rem;
+  font-weight:700;
+}
+
+.score{
+  font-size:2.8rem;
+  text-align:center;
+  color:#ff1e1e;
+  margin-top:15px;
+  font-weight:800;
+}
+
+/* MATCHES */
+
+.matches{
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+}
+
+.match-row{
+  background:#121212;
+  border-radius:18px;
+  padding:22px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:20px;
+  border:1px solid rgba(255,255,255,.06);
+  transition:.3s;
+}
+
+.match-row:hover{
+  border-color:#ff1e1e;
+  transform:translateX(-5px);
+}
+
+.match-teams{
+  font-size:1.2rem;
+  font-weight:700;
+}
+
+.match-time{
+  color:#ff1e1e;
+  font-size:1.1rem;
+  font-weight:700;
+}
+
+/* TRENDING */
+
+.trending{
+  display:flex;
+  flex-wrap:wrap;
+  gap:15px;
+}
+
+.trend{
+  background:rgba(255,0,0,.1);
+  border:1px solid rgba(255,0,0,.3);
+  padding:14px 20px;
+  border-radius:50px;
+  transition:.3s;
+  cursor:pointer;
+}
+
+.trend:hover{
+  background:#ff1e1e;
+  transform:translateY(-3px);
+}
+
+/* VIDEOS */
+
+.videos{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:25px;
+}
+
+iframe{
+  width:100%;
+  height:230px;
+  border:none;
+  border-radius:20px;
+}
+
+/* FOOTER */
+
+footer{
+  background:#050505;
+  padding:60px 0 30px;
+  border-top:1px solid rgba(255,255,255,.08);
+}
+
+.footer-content{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:30px;
+  margin-bottom:40px;
+}
+
+.footer-box h3{
+  color:#ff1e1e;
+  margin-bottom:18px;
+}
+
+.footer-box p,
+.footer-box li{
+  color:#bbb;
+  line-height:2;
+  list-style:none;
+}
+
+.copyright{
+  text-align:center;
+  padding-top:20px;
+  border-top:1px solid rgba(255,255,255,.05);
+  color:#999;
+}
+
+/* ANIMATION */
+
+.fade-in{
+  opacity:0;
+  transform:translateY(40px);
+  transition:1s;
+}
+
+.fade-in.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+@keyframes pulse{
+  0%{opacity:.4;}
+  50%{opacity:1;}
+  100%{opacity:.4;}
+}
+
+@keyframes fadeUp{
+  from{
+    opacity:0;
+    transform:translateY(40px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+
+  .nav-links{
+    position:absolute;
+    top:80px;
+    right:-100%;
+    flex-direction:column;
+    width:100%;
+    background:#111;
+    padding:30px;
+    transition:.4s;
+  }
+
+  .nav-links.active{
+    right:0;
+  }
+
+  .menu-btn{
+    display:block;
+  }
+
+  .hero h1{
+    font-size:2.8rem;
+  }
+
+}
+
+@media(max-width:600px){
+
+  .hero{
+    min-height:80vh;
+  }
+
+  .hero h1{
+    font-size:2.2rem;
+  }
+
+  .section-title{
+    font-size:1.8rem;
+  }
+
+}
+
+</style>
 </head>
+
 <body>
 
-  <!-- NAVBAR -->
+<nav>
 
-  <nav>
-    <div class="container nav-content">
-      <div class="logo">GOAL24<span>+</span></div>
+<div class="container nav-content">
 
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#home">الرئيسية</a></li>
-        <li><a href="#news">الأخبار</a></li>
-        <li><a href="#matches">المباريات</a></li>
-        <li><a href="#live">النتائج</a></li>
-        <li><a href="#videos">الفيديوهات</a></li>
-      </ul>
+<div class="logo">
+GOAL24<span>+</span>
+</div>
 
-      <div class="menu-btn" id="menuBtn">☰</div>
-    </div>
-  </nav>
+<ul class="nav-links" id="navLinks">
 
-  <!-- HERO -->
+<li><a href="#home">الرئيسية</a></li>
 
-  <header class="hero" id="home">
-    <div class="container hero-content">
-      <h1>كل أخبار كرة القدم على <span>GOAL24+</span></h1>
-      <p>
-        أحدث أخبار كرة القدم العالمية والمحلية، نتائج مباشرة، مواعيد المباريات، ملخصات الأهداف، وتحليلات الدوريات الكبرى في مكان واحد.
-      </p>
+<li><a href="#news">الأخبار</a></li>
 
-      <div class="hero-btns">
-        <button class="btn btn-primary">آخر الأخبار</button>
-        <button class="btn btn-outline">المباريات اليوم</button>
-      </div>
-    </div>
-  </header>
+<li><a href="#matches">المباريات</a></li>
 
-  <!-- NEWS -->
+<li><a href="#live">النتائج</a></li>
 
-  <section id="news">
-    <div class="container">
-      <h2 class="section-title fade-in">أحدث أخبار كرة القدم</h2>
+<li><a href="#videos">الفيديوهات</a></li>
 
-      <div class="news-grid">
+</ul>
 
-        <div class="news-card fade-in">
-          <img src="https://images.unsplash.com/photo-1517466787929-bc90951d0974?q=80&w=1200&auto=format&fit=crop" alt="">
-          <div class="news-content">
-            <span class="tag">الدوري الإنجليزي</span>
-            <h3>مانشستر سيتي يواصل صدارة البريميرليج بعد فوز مثير</h3>
-            <p>أداء قوي من كتيبة جوارديولا يحسم المواجهة في الدقائق الأخيرة.</p>
-          </div>
-        </div>
+<div class="menu-btn" id="menuBtn">
+☰
+</div>
 
-        <div class="news-card fade-in">
-          <img src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?q=80&w=1200&auto=format&fit=crop" alt="">
-          <div class="news-content">
-            <span class="tag">دوري الأبطال</span>
-            <h3>ريال مدريد يقترب من نصف النهائي بعد مباراة تاريخية</h3>
-            <p>الملكي يفرض سيطرته الأوروبية في ليلة كروية نارية.</p>
-          </div>
-        </div>
+</div>
 
-        <div class="news-card fade-in">
-          <img src="https://images.unsplash.com/photo-1508098682722-e99c643e7485?q=80&w=1200&auto=format&fit=crop" alt="">
-          <div class="news-content">
-            <span class="tag">الدوري المصري</span>
-            <h3>الأهلي والزمالك في سباق مشتعل على القمة</h3>
-            <p>منافسة قوية هذا الموسم وسط تألق عدد من النجوم الشباب.</p>
-          </div>
-        </div>
+</nav>
 
-      </div>
-    </div>
-  </section>
+<header class="hero" id="home">
 
-  <!-- LIVE SCORES -->
+<div class="container hero-content">
 
-  <section id="live">
-    <div class="container">
-      <h2 class="section-title fade-in">النتائج المباشرة</h2>
+<h1>
+كل أخبار كرة القدم على <span>GOAL24+</span>
+</h1>
 
-      <div class="live-wrapper">
+<p>
+أحدث أخبار كرة القدم العالمية والمحلية، نتائج مباشرة، مواعيد المباريات، وتحليلات كاملة في مكان واحد.
+</p>
 
-        <div class="live-card fade-in">
-          <div class="live-top">
-            <span>مباشر الآن</span>
-            <div class="live-dot"></div>
-          </div>
+<div class="hero-btns">
 
-          <div class="teams">
-            ليفربول
-            <br>
-            ضد
-            <br>
-            آرسنال
-          </div>
+<a href="#news">
+<button class="btn btn-primary">
+آخر الأخبار
+</button>
+</a>
 
-          <div class="score">2 - 1</div>
-        </div>
+<a href="#matches">
+<button class="btn btn-outline">
+المباريات اليوم
+</button>
+</a>
 
-        <div class="live-card fade-in">
-          <div class="live-top">
-            <span>مباشر الآن</span>
-            <div class="live-dot"></div>
-          </div>
+</div>
 
-          <div class="teams">
-            برشلونة
-            <br>
-            ضد
-            <br>
-            باريس سان جيرمان
-          </div>
+</div>
 
-          <div class="score">1 - 1</div>
-        </div>
+</header>
 
-      </div>
-    </div>
-  </section>
+<section id="news">
 
-  <!-- MATCH SCHEDULE -->
+<div class="container">
 
-  <section id="matches">
-    <div class="container">
-      <h2 class="section-title fade-in">جدول المباريات</h2>
+<h2 class="section-title fade-in">
+أحدث الأخبار
+</h2>
 
-      <div class="matches">
+<div class="news-grid">
 
-        <div class="match-row fade-in">
-          <div class="match-teams">ريال مدريد × بايرن ميونخ</div>
-          <div class="match-time">10:00 مساءً</div>
-        </div>
+<div class="news-card fade-in">
 
-        <div class="match-row fade-in">
-          <div class="match-teams">الأهلي × بيراميدز</div>
-          <div class="match-time">8:00 مساءً</div>
-        </div>
+<img src="https://images.unsplash.com/photo-1517466787929-bc90951d0974?q=80&w=1200&auto=format&fit=crop">
 
-        <div class="match-row fade-in">
-          <div class="match-teams">تشيلسي × مانشستر يونايتد</div>
-          <div class="match-time">9:30 مساءً</div>
-        </div>
+<div class="news-content">
 
-      </div>
-    </div>
-  </section>
+<span class="tag">
+الدوري الإنجليزي
+</span>
 
-  <!-- TRENDING -->
+<h3>
+مانشستر سيتي يواصل الصدارة بعد فوز مثير
+</h3>
 
-  <section>
-    <div class="container">
-      <h2 class="section-title fade-in">المواضيع الرائجة</h2>
+<p>
+أداء قوي من كتيبة جوارديولا يحسم المواجهة في اللحظات الأخيرة.
+</p>
 
-      <div class="trending fade-in">
-        <div class="trend">#محمد_صلاح</div>
-        <div class="trend">#ريال_مدريد</div>
-        <div class="trend">#دوري_الأبطال</div>
-        <div class="trend">#الأهلي</div>
-        <div class="trend">#هالاند</div>
-        <div class="trend">#ليفربول</div>
-      </div>
-    </div>
-  </section>
+</div>
 
-  <!-- VIDEOS -->
+</div>
 
-  <section id="videos">
-    <div class="container">
-      <h2 class="section-title fade-in">فيديوهات وملخصات</h2>
+<div class="news-card fade-in">
 
-      <div class="videos">
+<img src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?q=80&w=1200&auto=format&fit=crop">
 
-        <iframe class="fade-in" src="https://www.youtube.com/embed/ysz5S6PUM-U" allowfullscreen></iframe>
+<div class="news-content">
 
-        <iframe class="fade-in" src="https://www.youtube.com/embed/jNQXAC9IVRw" allowfullscreen></iframe>
+<span class="tag">
+دوري الأبطال
+</span>
 
-        <iframe class="fade-in" src="https://www.youtube.com/embed/tgbNymZ7vqY" allowfullscreen></iframe>
+<h3>
+ريال مدريد يقترب من نصف النهائي الأوروبي
+</h3>
 
-      </div>
-    </div>
-  </section>
+<p>
+الملكي يفرض سيطرته الأوروبية في ليلة كروية استثنائية.
+</p>
 
-  <!-- FOOTER -->
+</div>
 
-  <footer>
-    <div class="container">
+</div>
 
-      <div class="footer-content">
+<div class="news-card fade-in">
 
-        <div class="footer-box">
-          <h3>GOAL24+</h3>
-          <p>
-            منصة رياضية احترافية تقدم آخر أخبار كرة القدم العالمية والمحلية لحظة بلحظة.
-          </p>
-        </div>
+<img src="https://images.unsplash.com/photo-1508098682722-e99c643e7485?q=80&w=1200&auto=format&fit=crop">
 
-        <div class="footer-box">
-          <h3>الأقسام</h3>
-          <ul>
-            <li>الدوري الإنجليزي</li>
-            <li>دوري أبطال أوروبا</li>
-            <li>الدوري المصري</li>
-            <li>النتائج المباشرة</li>
-          </ul>
-        </div>
+<div class="news-content">
 
-        <div class="footer-box">
-          <h3>تابعنا</h3>
-          <ul>
-            <li>Facebook</li>
-            <li>YouTube</li>
-            <li>Instagram</li>
-            <li>X / Twitter</li>
-          </ul>
-        </div>
+<span class="tag">
+الدوري المصري
+</span>
 
-      </div>
+<h3>
+الأهلي والزمالك في صراع مشتعل على القمة
+</h3>
 
-      <div class="copyright">
-        © 2025 GOAL24+ جميع الحقوق محفوظة.
-      </div>
+<p>
+المنافسة تشتعل هذا الموسم وسط تألق عدد كبير من النجوم الشباب.
+</p>
 
-    </div>
-  </footer>
+</div>
 
-  <script>
+</div>
 
-    // MOBILE MENU
+</div>
 
-    const menuBtn = document.getElementById('menuBtn');
-    const navLinks = document.getElementById('navLinks');
+</div>
 
-    menuBtn.onclick = () => {
-      navLinks.classList.toggle('active');
+</section>
+
+<section id="live">
+
+<div class="container">
+
+<h2 class="section-title fade-in">
+النتائج المباشرة
+</h2>
+
+<div class="live-wrapper">
+
+<div class="live-card fade-in">
+
+<div class="live-top">
+
+<span>
+مباشر الآن
+</span>
+
+<div class="live-dot"></div>
+
+</div>
+
+<div class="teams">
+
+ليفربول
+
+<br>
+
+ضد
+
+<br>
+
+آرسنال
+
+</div>
+
+<div class="score">
+2 - 1
+</div>
+
+</div>
+
+<div class="live-card fade-in">
+
+<div class="live-top">
+
+<span>
+مباشر الآن
+</span>
+
+<div class="live-dot"></div>
+
+</div>
+
+<div class="teams">
+
+برشلونة
+
+<br>
+
+ضد
+
+<br>
+
+باريس سان جيرمان
+
+</div>
+
+<div class="score">
+1 - 1
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section id="matches">
+
+<div class="container">
+
+<h2 class="section-title fade-in">
+جدول المباريات
+</h2>
+
+<div class="matches">
+
+<div class="match-row fade-in">
+
+<div class="match-teams">
+ريال مدريد × بايرن ميونخ
+</div>
+
+<div class="match-time">
+10:00 مساءً
+</div>
+
+</div>
+
+<div class="match-row fade-in">
+
+<div class="match-teams">
+الأهلي × بيراميدز
+</div>
+
+<div class="match-time">
+8:00 مساءً
+</div>
+
+</div>
+
+<div class="match-row fade-in">
+
+<div class="match-teams">
+تشيلسي × مانشستر يونايتد
+</div>
+
+<div class="match-time">
+9:30 مساءً
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section>
+
+<div class="container">
+
+<h2 class="section-title fade-in">
+المواضيع الرائجة
+</h2>
+
+<div class="trending fade-in">
+
+<div class="trend">
+#محمد_صلاح
+</div>
+
+<div class="trend">
+#ريال_مدريد
+</div>
+
+<div class="trend">
+#دوري_الأبطال
+</div>
+
+<div class="trend">
+#الأهلي
+</div>
+
+<div class="trend">
+#ليفربول
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section id="videos">
+
+<div class="container">
+
+<h2 class="section-title fade-in">
+الفيديوهات والملخصات
+</h2>
+
+<div class="videos">
+
+<iframe src="https://www.youtube.com/embed/ysz5S6PUM-U" allowfullscreen></iframe>
+
+<iframe src="https://www.youtube.com/embed/jNQXAC9IVRw" allowfullscreen></iframe>
+
+<iframe src="https://www.youtube.com/embed/tgbNymZ7vqY" allowfullscreen></iframe>
+
+</div>
+
+</div>
+
+</section>
+
+<footer>
+
+<div class="container">
+
+<div class="footer-content">
+
+<div class="footer-box">
+
+<h3>
+GOAL24+
+</h3>
+
+<p>
+منصة رياضية احترافية تقدم أحدث أخبار كرة القدم العالمية والمحلية لحظة بلحظة.
+</p>
+
+</div>
+
+<div class="footer-box">
+
+<h3>
+الأقسام
+</h3>
+
+<ul>
+
+<li>
+الدوري الإنجليزي
+</li>
+
+<li>
+دوري الأبطال
+</li>
+
+<li>
+الدوري المصري
+</li>
+
+<li>
+النتائج المباشرة
+</li>
+
+</ul>
+
+</div>
+
+<div class="footer-box">
+
+<h3>
+تابعنا
+</h3>
+
+<ul>
+
+<li>Facebook</li>
+
+<li>YouTube</li>
+
+<li>Instagram</li>
+
+<li>X / Twitter</li>
+
+</ul>
+
+</div>
+
+</div>
+
+<div class="copyright">
+© 2026 GOAL24+ جميع الحقوق محفوظة
+</div>
+
+</div>
+
+</footer>
+
+<script>
+
+const menuBtn =
+document.getElementById("menuBtn");
+
+const navLinks =
+document.getElementById("navLinks");
+
+menuBtn.onclick = ()=>{
+
+  navLinks.classList.toggle("active");
+
+};
+
+const fadeElements =
+document.querySelectorAll(".fade-in");
+
+const observer =
+new IntersectionObserver(entries=>{
+
+  entries.forEach(entry=>{
+
+    if(entry.isIntersecting){
+
+      entry.target.classList.add("show");
+
     }
 
-    // SCROLL ANIMATION
+  });
 
-    const fadeElements = document.querySelectorAll('.fade-in');
+},{
+  threshold:0.2
+});
 
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting) {
-          entry.target.classList.add('show');
-        }
-      });
-    }, {
-      threshold: 0.2
-    });
+fadeElements.forEach(el=>observer.observe(el));
 
-    fadeElements.forEach(el => observer.observe(el));
-
-  </script>
+</script>
 
 </body>
 </html>
