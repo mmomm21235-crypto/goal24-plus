@@ -8,13 +8,9 @@
 
 <meta name="google-site-verification" content="SAHILacznfUWreTXSTU44b_jSKLm3QtVd6n0D7liZwI"/>
 
-<meta name="description" content="GOAL24+ موقع كرة قدم احترافي يقدم آخر الأخبار والنتائج المباشرة وجدول المباريات والتحليلات.">
-
-<meta name="keywords" content="كرة القدم, أخبار كرة القدم, مباريات اليوم, GOAL24">
+<meta name="description" content="GOAL24+ موقع أخبار كرة القدم العالمية والمحلية، نتائج مباشرة، مواعيد مباريات، فيديوهات وملخصات.">
 
 <title>GOAL24+ | Football News</title>
-
-<link rel="icon" href="https://cdn-icons-png.flaticon.com/512/53/53283.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -135,7 +131,7 @@ min-height:90vh;
 display:flex;
 align-items:center;
 background:
-linear-gradient(to left,rgba(0,0,0,.88),rgba(0,0,0,.55)),
+linear-gradient(to left,rgba(0,0,0,.85),rgba(0,0,0,.55)),
 url('https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=1600&auto=format&fit=crop') center/cover;
 }
 
@@ -174,7 +170,6 @@ border-radius:50px;
 cursor:pointer;
 font-weight:700;
 transition:.3s;
-font-size:1rem;
 }
 
 .btn-primary{
@@ -197,7 +192,7 @@ color:white;
 background:#ff1e1e;
 }
 
-/* SECTION */
+/* SECTIONS */
 
 section{
 padding:90px 0;
@@ -390,15 +385,12 @@ grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
 gap:25px;
 }
 
-.video-box{
-overflow:hidden;
-border-radius:20px;
-}
-
 iframe{
 width:100%;
 height:230px;
 border:none;
+border-radius:20px;
+background:#111;
 }
 
 /* FOOTER */
@@ -459,7 +451,6 @@ from{
 opacity:0;
 transform:translateY(40px);
 }
-
 to{
 opacity:1;
 transform:translateY(0);
@@ -499,6 +490,11 @@ font-size:2.8rem;
 
 .hero{
 min-height:80vh;
+text-align:center;
+}
+
+.hero-btns{
+justify-content:center;
 }
 
 .hero h1{
@@ -507,11 +503,6 @@ font-size:2.2rem;
 
 .section-title{
 font-size:1.8rem;
-}
-
-.btn{
-width:100%;
-text-align:center;
 }
 
 }
@@ -642,7 +633,7 @@ GOAL24<span>+</span>
 </h3>
 
 <p>
-المنافسة تشتعل هذا الموسم وسط تألق النجوم الشباب.
+المنافسة تشتعل هذا الموسم وسط تألق عدد كبير من النجوم الشباب.
 </p>
 
 </div>
@@ -676,7 +667,13 @@ GOAL24<span>+</span>
 </div>
 
 <div class="teams">
-ليفربول<br>ضد<br>آرسنال
+
+ليفربول
+<br>
+ضد
+<br>
+آرسنال
+
 </div>
 
 <div class="score">
@@ -696,7 +693,13 @@ GOAL24<span>+</span>
 </div>
 
 <div class="teams">
-برشلونة<br>ضد<br>باريس سان جيرمان
+
+برشلونة
+<br>
+ضد
+<br>
+باريس سان جيرمان
+
 </div>
 
 <div class="score">
@@ -795,17 +798,11 @@ GOAL24<span>+</span>
 
 <div class="videos">
 
-<div class="video-box">
 <iframe src="https://www.youtube.com/embed/ysz5S6PUM-U" allowfullscreen></iframe>
-</div>
 
-<div class="video-box">
 <iframe src="https://www.youtube.com/embed/jNQXAC9IVRw" allowfullscreen></iframe>
-</div>
 
-<div class="video-box">
 <iframe src="https://www.youtube.com/embed/tgbNymZ7vqY" allowfullscreen></iframe>
-</div>
 
 </div>
 
@@ -875,23 +872,16 @@ GOAL24<span>+</span>
 
 <script>
 
-const menuBtn =
-document.getElementById("menuBtn");
+const menuBtn=document.getElementById("menuBtn");
+const navLinks=document.getElementById("navLinks");
 
-const navLinks =
-document.getElementById("navLinks");
-
-menuBtn.onclick = ()=>{
-
+menuBtn.onclick=()=>{
 navLinks.classList.toggle("active");
-
 };
 
-const fadeElements =
-document.querySelectorAll(".fade-in");
+const fadeElements=document.querySelectorAll(".fade-in");
 
-const observer =
-new IntersectionObserver(entries=>{
+const observer=new IntersectionObserver(entries=>{
 
 entries.forEach(entry=>{
 
