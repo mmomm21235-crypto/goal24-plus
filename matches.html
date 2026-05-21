@@ -79,18 +79,51 @@
     .league {
       color: #facc15;
       font-size: 14px;
-      margin-bottom: 8px;
+      margin-bottom: 12px;
+      text-align: center;
     }
 
     .teams {
-      font-size: 20px;
-      margin: 8px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 15px 0;
+    }
+
+    .team {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 40%;
+      text-align: center;
+    }
+
+    .logo {
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      background: white;
+      padding: 4px;
+      margin-bottom: 8px;
+    }
+
+    .team-name {
+      font-size: 17px;
       font-weight: bold;
+    }
+
+    .vs {
+      color: #22c55e;
+      font-weight: bold;
+      font-size: 20px;
     }
 
     .time {
       color: #38bdf8;
       font-size: 15px;
+      text-align: center;
+      margin-top: 10px;
     }
 
     @keyframes blink {
@@ -134,8 +167,11 @@
 let allMatches = [];
 
 async function loadMatches() {
+
   try {
-    const today = new Date().toISOString().slice(0,10);
+
+    const today =
+      new Date().toISOString().slice(0,10);
 
     const res = await fetch(
       `https://www.thesportsdb.com/api/v1/json/3/eventsday.php?d=${today}&s=Soccer`
@@ -146,33 +182,51 @@ async function loadMatches() {
     allMatches = data.events || [];
 
     setupFilters();
+
     render(allMatches);
 
   } catch (e) {
+
     document.getElementById("matches").innerHTML =
       "❌ حدث خطأ أثناء تحميل المباريات";
+
   }
+
 }
 
 function setupFilters() {
-  const leagues = [...new Set(allMatches.map(m => m.strLeague))];
-  const select = document.getElementById("leagueFilter");
+
+  const leagues =
+    [...new Set(allMatches.map(m => m.strLeague))];
+
+  const select =
+    document.getElementById("leagueFilter");
 
   select.innerHTML =
     '<option value="all">كل الدوريات</option>';
 
   leagues.forEach(l => {
-    let opt = document.createElement("option");
+
+    let opt =
+      document.createElement("option");
+
     opt.value = l;
+
     opt.textContent = l;
+
     select.appendChild(opt);
+
   });
 
   select.onchange = filterMatches;
-  document.getElementById("search").oninput = filterMatches;
+
+  document.getElementById("search").oninput =
+    filterMatches;
+
 }
 
 function filterMatches() {
+
   let searchValue =
     document.getElementById("search")
     .value
@@ -189,6 +243,7 @@ function filterMatches() {
       m.strLeague === leagueValue;
 
     let searchMatch =
+
       (m.strHomeTeam || "")
       .toLowerCase()
       .includes(searchValue)
@@ -200,35 +255,47 @@ function filterMatches() {
       .includes(searchValue);
 
     return leagueMatch && searchMatch;
+
   });
 
   render(filtered);
+
 }
 
 function openMatch(id) {
+
   window.location.href =
     "match.html?id=" + id;
+
 }
 
 function isLive() {
+
   return new Date().getMinutes() % 2 === 0;
+
 }
 
 function render(matches) {
 
   if (!matches.length) {
+
     document.getElementById("matches").innerHTML =
       "لا توجد مباريات";
+
     return;
+
   }
 
   document.getElementById("matches").innerHTML =
+
     matches.map(m => {
 
       let live = isLive();
 
       return `
+
         <div class="card ${live ? 'live-card' : ''}"
+
           onclick="openMatch('${m.idEvent}')">
 
           ${live
@@ -241,9 +308,37 @@ function render(matches) {
           </div>
 
           <div class="teams">
-            ⚽ ${m.strHomeTeam}
-            vs
-            ${m.strAwayTeam}
+
+            <div class="team">
+
+              <img
+                class="logo"
+                src="https://www.thesportsdb.com/images/media/team/badge/default.png"
+              >
+
+              <div class="team-name">
+                ${m.strHomeTeam}
+              </div>
+
+            </div>
+
+            <div class="vs">
+              VS
+            </div>
+
+            <div class="team">
+
+              <img
+                class="logo"
+                src="https://www.thesportsdb.com/images/media/team/badge/default.png"
+              >
+
+              <div class="team-name">
+                ${m.strAwayTeam}
+              </div>
+
+            </div>
+
           </div>
 
           <div class="time">
@@ -251,8 +346,11 @@ function render(matches) {
           </div>
 
         </div>
+
       `;
+
     }).join("");
+
 }
 
 loadMatches();
