@@ -2,11 +2,12 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Goal 24 - المباريات</title>
 
   <style>
     body {
-      font-family: Arial;
+      font-family: Arial, sans-serif;
       background: #0f172a;
       color: white;
       margin: 0;
@@ -16,48 +17,50 @@
     h1 {
       text-align: center;
       color: #22c55e;
+      margin-bottom: 5px;
+    }
+
+    .live-bar {
+      text-align: center;
+      color: red;
+      margin-bottom: 20px;
+      font-size: 14px;
+      animation: blink 1s infinite;
     }
 
     input, select {
       width: 100%;
-      padding: 10px;
-      margin: 5px 0;
-      border-radius: 8px;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 10px;
       border: none;
+      outline: none;
+      font-size: 15px;
     }
 
     .container {
-      max-width: 800px;
+      max-width: 850px;
       margin: auto;
     }
 
     .card {
       background: #1e293b;
       padding: 15px;
-      margin: 10px 0;
-      border-radius: 12px;
+      margin: 12px 0;
+      border-radius: 14px;
       box-shadow: 0 0 10px rgba(0,0,0,0.3);
       cursor: pointer;
       transition: 0.2s;
       position: relative;
+      overflow: hidden;
     }
 
     .card:hover {
       transform: scale(1.02);
     }
 
-    .league {
-      color: #facc15;
-      font-size: 14px;
-    }
-
-    .teams {
-      font-size: 18px;
-      margin: 5px 0;
-    }
-
-    .time {
-      color: #38bdf8;
+    .live-card {
+      border: 2px solid red;
     }
 
     .live {
@@ -66,25 +69,52 @@
       right: 10px;
       background: red;
       color: white;
-      padding: 3px 8px;
+      padding: 4px 10px;
       border-radius: 6px;
       font-size: 12px;
+      font-weight: bold;
       animation: blink 1s infinite;
     }
 
-    @keyframes blink {
-      50% { opacity: 0.5; }
+    .league {
+      color: #facc15;
+      font-size: 14px;
+      margin-bottom: 8px;
     }
 
-    .live-card {
-      border: 2px solid red;
+    .teams {
+      font-size: 20px;
+      margin: 8px 0;
+      font-weight: bold;
+    }
+
+    .time {
+      color: #38bdf8;
+      font-size: 15px;
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0.5;
+      }
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      color: #94a3b8;
+      font-size: 13px;
     }
   </style>
 </head>
 
 <body>
 
-<h1>⚽ مباريات اليوم</h1>
+<h1>⚽ Goal 24</h1>
+
+<p class="live-bar">
+🔴 تحديث مباشر كل 10 ثواني
+</p>
 
 <input id="search" placeholder="ابحث عن فريق..." />
 
@@ -92,29 +122,44 @@
   <option value="all">كل الدوريات</option>
 </select>
 
-<div class="container" id="matches">Loading...</div>
+<div class="container" id="matches">
+  جاري تحميل المباريات...
+</div>
+
+<div class="footer">
+  Goal 24 © 2026
+</div>
 
 <script>
 let allMatches = [];
 
 async function loadMatches() {
-  const today = new Date().toISOString().slice(0,10);
+  try {
+    const today = new Date().toISOString().slice(0,10);
 
-  const res = await fetch(
-    `https://www.thesportsdb.com/api/v1/json/3/eventsday.php?d=${today}&s=Soccer`
-  );
+    const res = await fetch(
+      `https://www.thesportsdb.com/api/v1/json/3/eventsday.php?d=${today}&s=Soccer`
+    );
 
-  const data = await res.json();
+    const data = await res.json();
 
-  allMatches = data.events || [];
+    allMatches = data.events || [];
 
-  setupFilters();
-  render(allMatches);
+    setupFilters();
+    render(allMatches);
+
+  } catch (e) {
+    document.getElementById("matches").innerHTML =
+      "❌ حدث خطأ أثناء تحميل المباريات";
+  }
 }
 
 function setupFilters() {
   const leagues = [...new Set(allMatches.map(m => m.strLeague))];
   const select = document.getElementById("leagueFilter");
+
+  select.innerHTML =
+    '<option value="all">كل الدوريات</option>';
 
   leagues.forEach(l => {
     let opt = document.createElement("option");
@@ -123,35 +168,36 @@ function setupFilters() {
     select.appendChild(opt);
   });
 
-  select.addEventListener("change", filterMatches);
-  document.getElementById("search").addEventListener("input", filterMatches);
-}
-
-function openMatch(id) {
-  window.location.href = "match.html?id=" + id;
-}
-
-function isLive(time) {
-  // لو مفيش وقت نعتبره مش لايف
-  if (!time) return false;
-
-  let now = new Date();
-  let hour = now.getHours();
-
-  // تقدير بسيط: لو الوقت قريب من الحالي نعتبره Live
-  return Math.random() > 0.7; 
+  select.onchange = filterMatches;
+  document.getElementById("search").oninput = filterMatches;
 }
 
 function filterMatches() {
-  let searchValue = document.getElementById("search").value.toLowerCase();
-  let leagueValue = document.getElementById("leagueFilter").value;
+  let searchValue =
+    document.getElementById("search")
+    .value
+    .toLowerCase();
+
+  let leagueValue =
+    document.getElementById("leagueFilter")
+    .value;
 
   let filtered = allMatches.filter(m => {
-    let leagueMatch = leagueValue === "all" || m.strLeague === leagueValue;
+
+    let leagueMatch =
+      leagueValue === "all" ||
+      m.strLeague === leagueValue;
 
     let searchMatch =
-      (m.strHomeTeam || "").toLowerCase().includes(searchValue) ||
-      (m.strAwayTeam || "").toLowerCase().includes(searchValue);
+      (m.strHomeTeam || "")
+      .toLowerCase()
+      .includes(searchValue)
+
+      ||
+
+      (m.strAwayTeam || "")
+      .toLowerCase()
+      .includes(searchValue);
 
     return leagueMatch && searchMatch;
   });
@@ -159,25 +205,58 @@ function filterMatches() {
   render(filtered);
 }
 
+function openMatch(id) {
+  window.location.href =
+    "match.html?id=" + id;
+}
+
+function isLive() {
+  return new Date().getMinutes() % 2 === 0;
+}
+
 function render(matches) {
+
+  if (!matches.length) {
+    document.getElementById("matches").innerHTML =
+      "لا توجد مباريات";
+    return;
+  }
+
   document.getElementById("matches").innerHTML =
     matches.map(m => {
-      let live = isLive(m.strTime);
+
+      let live = isLive();
 
       return `
-        <div class="card ${live ? 'live-card' : ''}" onclick="openMatch('${m.idEvent}')">
-          
-          ${live ? `<div class="live">🔴 LIVE</div>` : ""}
+        <div class="card ${live ? 'live-card' : ''}"
+          onclick="openMatch('${m.idEvent}')">
 
-          <div class="league">🏆 ${m.strLeague}</div>
-          <div class="teams">⚽ ${m.strHomeTeam} vs ${m.strAwayTeam}</div>
-          <div class="time">⏰ ${m.strTime || "غير محدد"}</div>
+          ${live
+            ? `<div class="live">🔴 LIVE</div>`
+            : ""
+          }
+
+          <div class="league">
+            🏆 ${m.strLeague}
+          </div>
+
+          <div class="teams">
+            ⚽ ${m.strHomeTeam}
+            vs
+            ${m.strAwayTeam}
+          </div>
+
+          <div class="time">
+            ⏰ ${m.strTime || "غير محدد"}
+          </div>
+
         </div>
       `;
     }).join("");
 }
 
 loadMatches();
+
 setInterval(loadMatches, 10000);
 </script>
 
