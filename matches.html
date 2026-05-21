@@ -6,6 +6,7 @@
   <title>Goal 24 - المباريات</title>
 
   <style>
+
     body {
       font-family: Arial, sans-serif;
       background: #0f172a;
@@ -106,6 +107,7 @@
       background: white;
       padding: 4px;
       margin-bottom: 8px;
+      object-fit: contain;
     }
 
     .team-name {
@@ -126,6 +128,13 @@
       margin-top: 10px;
     }
 
+    .status {
+      text-align: center;
+      margin-top: 10px;
+      color: #22c55e;
+      font-size: 14px;
+    }
+
     @keyframes blink {
       50% {
         opacity: 0.5;
@@ -138,6 +147,20 @@
       color: #94a3b8;
       font-size: 13px;
     }
+
+    @media(max-width:600px){
+
+      .team-name{
+        font-size:14px;
+      }
+
+      .logo{
+        width:45px;
+        height:45px;
+      }
+
+    }
+
   </style>
 </head>
 
@@ -164,7 +187,31 @@
 </div>
 
 <script>
+
 let allMatches = [];
+
+async function getTeamLogo(teamName){
+
+  try{
+
+    const res = await fetch(
+      `https://www.thesportsdb.com/api/v1/json/3/searchteams.php?t=${teamName}`
+    );
+
+    const data = await res.json();
+
+    return data.teams?.[0]?.strTeamBadge
+      ||
+
+    "https://www.thesportsdb.com/images/media/team/badge/default.png";
+
+  }catch{
+
+    return "https://www.thesportsdb.com/images/media/team/badge/default.png";
+
+  }
+
+}
 
 async function loadMatches() {
 
@@ -180,6 +227,16 @@ async function loadMatches() {
     const data = await res.json();
 
     allMatches = data.events || [];
+
+    for(let m of allMatches){
+
+      m.homeLogo =
+        await getTeamLogo(m.strHomeTeam);
+
+      m.awayLogo =
+        await getTeamLogo(m.strAwayTeam);
+
+    }
 
     setupFilters();
 
@@ -313,7 +370,7 @@ function render(matches) {
 
               <img
                 class="logo"
-                src="https://www.thesportsdb.com/images/media/team/badge/default.png"
+                src="${m.homeLogo}"
               >
 
               <div class="team-name">
@@ -330,7 +387,7 @@ function render(matches) {
 
               <img
                 class="logo"
-                src="https://www.thesportsdb.com/images/media/team/badge/default.png"
+                src="${m.awayLogo}"
               >
 
               <div class="team-name">
@@ -345,6 +402,10 @@ function render(matches) {
             ⏰ ${m.strTime || "غير محدد"}
           </div>
 
+          <div class="status">
+            ${live ? "🔥 المباراة جارية الآن" : "⌛ لم تبدأ بعد"}
+          </div>
+
         </div>
 
       `;
@@ -356,6 +417,7 @@ function render(matches) {
 loadMatches();
 
 setInterval(loadMatches, 10000);
+
 </script>
 
 </body>
