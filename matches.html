@@ -47,6 +47,33 @@ input,select{
   font-size:15px;
 }
 
+.tabs{
+  display:flex;
+  gap:10px;
+  margin-bottom:15px;
+}
+
+.tabs button{
+  flex:1;
+  padding:12px;
+  border:none;
+  border-radius:12px;
+  background:#111827;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  transition:.3s;
+  font-size:14px;
+}
+
+.tabs button:hover{
+  background:#1e293b;
+}
+
+.tabs .active{
+  background:#ff2020;
+}
+
 .container{
   max-width:850px;
   margin:auto;
@@ -196,6 +223,22 @@ input,select{
 <option value="all">كل الدوريات</option>
 </select>
 
+<div class="tabs">
+
+<button onclick="changeDay(-1)">
+أمس
+</button>
+
+<button class="active" onclick="changeDay(0)">
+اليوم
+</button>
+
+<button onclick="changeDay(1)">
+غدًا
+</button>
+
+</div>
+
 <div class="container" id="matches">
 
 <div class="loading">
@@ -211,6 +254,8 @@ GOAL24+ © 2026
 <script>
 
 let allMatches = [];
+
+let currentDay = 0;
 
 const defaultLogo =
 "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Image-not-found.png/480px-Image-not-found.png";
@@ -239,8 +284,14 @@ async function loadMatches(){
 
   try{
 
+    const date = new Date();
+
+    date.setDate(
+    date.getDate() + currentDay
+    );
+
     const today =
-    new Date().toISOString().slice(0,10);
+    date.toISOString().slice(0,10);
 
     const res = await fetch(
 `https://www.thesportsdb.com/api/v1/json/3/eventsday.php?d=${today}&s=Soccer`
@@ -351,6 +402,20 @@ function openMatch(id){
 function isLive(){
 
   return new Date().getMinutes() % 2 === 0;
+
+}
+
+function changeDay(day){
+
+  currentDay = day;
+
+  document
+  .querySelectorAll(".tabs button")
+  .forEach(btn=>btn.classList.remove("active"));
+
+  event.target.classList.add("active");
+
+  loadMatches();
 
 }
 
