@@ -1,12 +1,26 @@
 [
   {
+    "id": 1,
+    "league": "الدوري المصري",
     "home": "الأهلي",
     "away": "الزمالك",
-    "time": "8:00 مساءً"
+    "time": "8:00 مساءً",
+    "date": "2026-05-25",
+    "status": "live",
+    "stadium": "استاد القاهرة",
+    "homeLogo": "https://upload.wikimedia.org/wikipedia/ar/1/13/Al_Ahly_SC_logo.png",
+    "awayLogo": "https://upload.wikimedia.org/wikipedia/ar/7/7c/Zamalek_SC_logo.png"
   },
   {
+    "id": 2,
+    "league": "الدوري الإسباني",
     "home": "برشلونة",
     "away": "ريال مدريد",
-    "time": "10:00 مساءً"
+    "time": "10:00 مساءً",
+    "date": "2026-05-25",
+    "status": "upcoming",
+    "stadium": "كامب نو",
+    "homeLogo": "https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg",
+    "awayLogo": "https://upload.wikimedia.org/wikipedia/en/5/56/Real_Madrid_CF.svg"
   }
 ]
