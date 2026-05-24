@@ -10,7 +10,13 @@
 
 <meta name="description" content="GOAL24+ موقع أخبار كرة القدم العالمية والمحلية، نتائج مباشرة، مواعيد مباريات، فيديوهات وملخصات.">
 
+<meta name="keywords" content="كرة القدم, أخبار كرة القدم, مباريات اليوم, نتائج مباشرة, GOAL24">
+
+<meta name="author" content="GOAL24+">
+
 <title>GOAL24+ | Football News</title>
+
+<link rel="icon" href="https://cdn-icons-png.flaticon.com/512/53/53283.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -391,6 +397,12 @@ background:#111;
 padding:10px;
 border-radius:20px;
 border:1px solid rgba(255,255,255,.06);
+transition:.3s;
+}
+
+.video-card:hover{
+transform:translateY(-6px);
+border-color:#ff1e1e;
 }
 
 iframe{
@@ -426,6 +438,15 @@ margin-bottom:18px;
 color:#bbb;
 line-height:2;
 list-style:none;
+}
+
+.footer-box li{
+transition:.3s;
+cursor:pointer;
+}
+
+.footer-box li:hover{
+color:#ff1e1e;
 }
 
 .copyright{
@@ -734,39 +755,18 @@ GOAL24<span>+</span>
 <div class="matches">
 
 <div class="match-row fade-in">
-
-<div class="match-teams">
-ريال مدريد × بايرن ميونخ
-</div>
-
-<div class="match-time">
-10:00 مساءً
-</div>
-
+<div class="match-teams">ريال مدريد × بايرن ميونخ</div>
+<div class="match-time">10:00 مساءً</div>
 </div>
 
 <div class="match-row fade-in">
-
-<div class="match-teams">
-الأهلي × بيراميدز
-</div>
-
-<div class="match-time">
-8:00 مساءً
-</div>
-
+<div class="match-teams">الأهلي × بيراميدز</div>
+<div class="match-time">8:00 مساءً</div>
 </div>
 
 <div class="match-row fade-in">
-
-<div class="match-teams">
-تشيلسي × مانشستر يونايتد
-</div>
-
-<div class="match-time">
-9:30 مساءً
-</div>
-
+<div class="match-teams">تشيلسي × مانشستر يونايتد</div>
+<div class="match-time">9:30 مساءً</div>
 </div>
 
 </div>
@@ -897,9 +897,7 @@ const observer=new IntersectionObserver(entries=>{
 entries.forEach(entry=>{
 
 if(entry.isIntersecting){
-
 entry.target.classList.add("show");
-
 }
 
 });
