@@ -1,0 +1,4 @@
+robots.txtUser-agent: *
+Allow: /
+
+Sitemap: https://goal24-plus.vercel.app/sitemap.xml
