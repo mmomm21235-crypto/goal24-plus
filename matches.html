@@ -1,245 +1,280 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>GOAL24+ | المباريات</title>
 
+<meta name="description" content="تابع مباريات اليوم ونتائج كرة القدم مباشرة على GOAL24+">
+<meta name="keywords" content="مباريات اليوم, نتائج مباشرة, كرة القدم">
+<meta name="robots" content="index, follow">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css">
+
 <style>
 
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
+.matches-page{
+padding:120px 15px 40px;
+min-height:100vh;
+background:#020617;
 }
 
-body{
-  font-family:Arial,sans-serif;
-  background:#020617;
-  color:white;
-  padding:15px;
-}
-
-h1{
-  text-align:center;
-  color:#ff2020;
-  margin-bottom:10px;
-  font-size:32px;
+.matches-title{
+text-align:center;
+font-size:2.2rem;
+margin-bottom:10px;
+color:#ff2020;
+font-weight:800;
 }
 
 .live-bar{
-  text-align:center;
-  color:#ff3b3b;
-  margin-bottom:20px;
-  animation:blink 1s infinite;
-  font-size:14px;
+text-align:center;
+color:#ff3b3b;
+margin-bottom:20px;
+animation:pulse 1s infinite;
+font-size:14px;
 }
 
-input,select{
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:12px;
-  margin-bottom:10px;
-  background:#111827;
-  color:white;
-  font-size:15px;
+.filters{
+max-width:850px;
+margin:auto auto 15px;
+}
+
+.filters input,
+.filters select{
+width:100%;
+padding:14px;
+border:none;
+border-radius:14px;
+margin-bottom:10px;
+background:#111827;
+color:white;
+font-family:'Tajawal',sans-serif;
+font-size:15px;
+outline:none;
 }
 
 .tabs{
-  display:flex;
-  gap:10px;
-  margin-bottom:15px;
+display:flex;
+gap:10px;
+margin-bottom:15px;
 }
 
 .tabs button{
-  flex:1;
-  padding:12px;
-  border:none;
-  border-radius:12px;
-  background:#111827;
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
-  transition:.3s;
-  font-size:14px;
+flex:1;
+padding:13px;
+border:none;
+border-radius:14px;
+background:#111827;
+color:white;
+font-weight:700;
+cursor:pointer;
+transition:.3s;
+font-family:'Tajawal',sans-serif;
+}
+
+.tabs button.active{
+background:var(--main);
 }
 
 .tabs button:hover{
-  background:#1e293b;
+background:#1e293b;
 }
 
-.tabs .active{
-  background:#ff2020;
+.matches-container{
+max-width:850px;
+margin:auto;
 }
 
-.container{
-  max-width:850px;
-  margin:auto;
+.match-card{
+background:#111827;
+border-radius:22px;
+padding:18px;
+margin-bottom:15px;
+position:relative;
+border:1px solid rgba(255,255,255,.08);
+transition:.3s;
+cursor:pointer;
 }
 
-.card{
-  background:#111827;
-  border-radius:18px;
-  padding:10px;
-  margin-bottom:14px;
-  position:relative;
-  transition:.3s;
-  border:1px solid rgba(255,255,255,.08);
-}
-
-.card:hover{
-  transform:translateY(-2px);
+.match-card:hover{
+transform:translateY(-4px);
+border-color:var(--main);
 }
 
 .live-card{
-  border:1px solid red;
-  box-shadow:0 0 15px rgba(255,0,0,.25);
+border-color:red;
+box-shadow:0 0 20px rgba(255,0,0,.2);
 }
 
-.live{
-  position:absolute;
-  top:10px;
-  right:10px;
-  background:red;
-  color:white;
-  padding:4px 10px;
-  border-radius:20px;
-  font-size:11px;
-  font-weight:bold;
-  animation:blink 1s infinite;
+.live-badge{
+position:absolute;
+top:12px;
+right:12px;
+background:red;
+padding:5px 12px;
+border-radius:30px;
+font-size:11px;
+font-weight:700;
+animation:pulse 1s infinite;
 }
 
-.league{
-  text-align:center;
-  color:#facc15;
-  font-size:13px;
-  margin-bottom:12px;
+.league-name{
+text-align:center;
+margin-bottom:16px;
+color:#facc15;
+font-size:14px;
 }
 
-.teams{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:8px;
+.match-teams{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:10px;
 }
 
 .team{
-  width:40%;
-  text-align:center;
+width:40%;
+text-align:center;
 }
 
-.logo{
-  width:42px;
-  height:42px;
-  object-fit:contain;
-  background:white;
-  border-radius:50%;
-  padding:3px;
-  margin-bottom:8px;
+.team img{
+width:50px;
+height:50px;
+object-fit:contain;
+background:white;
+border-radius:50%;
+padding:4px;
+margin:auto auto 10px;
 }
 
 .team-name{
-  font-size:14px;
-  font-weight:bold;
-  line-height:1.4;
+font-size:15px;
+font-weight:700;
+line-height:1.5;
 }
 
 .vs{
-  color:#22c55e;
-  font-weight:bold;
-  font-size:18px;
+font-size:22px;
+font-weight:800;
+color:#22c55e;
 }
 
-.time{
-  text-align:center;
-  color:#38bdf8;
-  margin-top:10px;
-  font-size:13px;
+.match-time{
+text-align:center;
+margin-top:15px;
+color:#38bdf8;
+font-size:14px;
 }
 
-.status{
-  text-align:center;
-  margin-top:8px;
-  font-size:13px;
-  color:#94a3b8;
-}
-
-.live-status{
-  color:#ff3b3b;
-}
-
-.footer{
-  text-align:center;
-  margin-top:25px;
-  color:#64748b;
-  font-size:12px;
+.match-status{
+text-align:center;
+margin-top:8px;
+font-size:13px;
+color:#cbd5e1;
 }
 
 .loading{
-  text-align:center;
-  padding:30px;
-  color:#94a3b8;
-}
-
-@keyframes blink{
-  50%{
-    opacity:.5;
-  }
+text-align:center;
+padding:30px;
+color:#94a3b8;
 }
 
 @media(max-width:600px){
 
-  h1{
-    font-size:28px;
-  }
+.matches-title{
+font-size:1.8rem;
+}
 
-  .team-name{
-    font-size:13px;
-  }
+.team-name{
+font-size:13px;
+}
 
-  .logo{
-    width:38px;
-    height:38px;
-  }
+.team img{
+width:42px;
+height:42px;
+}
 
 }
 
 </style>
+
 </head>
 
 <body>
 
-<h1>⚽ GOAL24+</h1>
+<nav>
+
+<div class="container nav-content">
+
+<a href="index.html" class="logo">
+GOAL24<span>+</span>
+</a>
+
+<ul class="nav-links">
+
+<li><a href="index.html">الرئيسية</a></li>
+<li><a href="matches.html">المباريات</a></li>
+
+</ul>
+
+</div>
+
+</nav>
+
+<section class="matches-page">
+
+<h1 class="matches-title">
+⚽ مباريات اليوم
+</h1>
 
 <div class="live-bar">
 🔴 تحديث مباشر كل 10 ثواني
 </div>
 
-<input id="search" placeholder="ابحث عن فريق...">
+<div class="filters">
+
+<input
+id="search"
+type="text"
+placeholder="ابحث عن فريق..."
+>
 
 <select id="leagueFilter">
-<option value="all">كل الدوريات</option>
+
+<option value="all">
+كل الدوريات
+</option>
+
 </select>
 
 <div class="tabs">
 
-<button onclick="changeDay(-1)">
+<button onclick="changeDay(-1,this)">
 أمس
 </button>
 
-<button class="active" onclick="changeDay(0)">
+<button class="active" onclick="changeDay(0,this)">
 اليوم
 </button>
 
-<button onclick="changeDay(1)">
+<button onclick="changeDay(1,this)">
 غدًا
 </button>
 
 </div>
 
-<div class="container" id="matches">
+</div>
+
+<div class="matches-container" id="matches">
 
 <div class="loading">
 جاري تحميل المباريات...
@@ -247,261 +282,261 @@ input,select{
 
 </div>
 
-<div class="footer">
-GOAL24+ © 2026
-</div>
+</section>
 
 <script>
 
 let allMatches = [];
-
 let currentDay = 0;
 
 const defaultLogo =
-"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Image-not-found.png/480px-Image-not-found.png";
+"https://cdn-icons-png.flaticon.com/512/53/53283.png";
 
 async function getTeamLogo(team){
 
-  try{
+try{
 
-    const res = await fetch(
+const res = await fetch(
 `https://www.thesportsdb.com/api/v1/json/3/searchteams.php?t=${team}`
-    );
+);
 
-    const data = await res.json();
+const data = await res.json();
 
-    return data?.teams?.[0]?.strTeamBadge || defaultLogo;
+return data?.teams?.[0]?.strTeamBadge || defaultLogo;
 
-  }catch{
+}catch{
 
-    return defaultLogo;
+return defaultLogo;
 
-  }
+}
 
 }
 
 async function loadMatches(){
 
-  try{
+const container =
+document.getElementById("matches");
 
-    const date = new Date();
+container.innerHTML =
+`<div class="loading">جاري تحميل المباريات...</div>`;
 
-    date.setDate(
-    date.getDate() + currentDay
-    );
+try{
 
-    const today =
-    date.toISOString().slice(0,10);
+const date = new Date();
 
-    const res = await fetch(
+date.setDate(
+date.getDate() + currentDay
+);
+
+const today =
+date.toISOString().slice(0,10);
+
+const res = await fetch(
 `https://www.thesportsdb.com/api/v1/json/3/eventsday.php?d=${today}&s=Soccer`
-    );
+);
 
-    const data = await res.json();
+const data = await res.json();
 
-    allMatches = data.events || [];
+allMatches = data.events || [];
 
-    for(const m of allMatches){
+for(const match of allMatches){
 
-      m.homeLogo =
-      await getTeamLogo(m.strHomeTeam);
+match.homeLogo =
+await getTeamLogo(match.strHomeTeam);
 
-      m.awayLogo =
-      await getTeamLogo(m.strAwayTeam);
+match.awayLogo =
+await getTeamLogo(match.strAwayTeam);
 
-    }
+}
 
-    setupFilters();
+setupFilters();
 
-    render(allMatches);
+renderMatches(allMatches);
 
-  }catch{
+}catch{
 
-    document.getElementById("matches").innerHTML =
-    `<div class="loading">❌ حدث خطأ أثناء التحميل</div>`;
+container.innerHTML =
+`<div class="loading">❌ فشل تحميل المباريات</div>`;
 
-  }
+}
 
 }
 
 function setupFilters(){
 
-  const leagues =
-  [...new Set(allMatches.map(m => m.strLeague))];
+const leagues =
+[...new Set(allMatches.map(m => m.strLeague))];
 
-  const select =
-  document.getElementById("leagueFilter");
+const select =
+document.getElementById("leagueFilter");
 
-  select.innerHTML =
-  `<option value="all">كل الدوريات</option>`;
+select.innerHTML =
+`<option value="all">كل الدوريات</option>`;
 
-  leagues.forEach(l=>{
+leagues.forEach(league=>{
 
-    let option =
-    document.createElement("option");
+const option =
+document.createElement("option");
 
-    option.value = l;
+option.value = league;
 
-    option.textContent = l;
+option.textContent = league;
 
-    select.appendChild(option);
+select.appendChild(option);
 
-  });
+});
 
-  select.onchange = filterMatches;
+select.onchange = filterMatches;
 
-  document.getElementById("search").oninput =
-  filterMatches;
+document.getElementById("search")
+.oninput = filterMatches;
 
 }
 
 function filterMatches(){
 
-  const search =
-  document.getElementById("search")
-  .value
-  .toLowerCase();
+const search =
+document.getElementById("search")
+.value
+.toLowerCase();
 
-  const league =
-  document.getElementById("leagueFilter")
-  .value;
+const league =
+document.getElementById("leagueFilter")
+.value;
 
-  const filtered = allMatches.filter(m=>{
+const filtered =
+allMatches.filter(match=>{
 
-    const leagueMatch =
-    league === "all" ||
-    m.strLeague === league;
+const leagueMatch =
+league === "all" ||
+match.strLeague === league;
 
-    const searchMatch =
+const searchMatch =
 
-    (m.strHomeTeam || "")
-    .toLowerCase()
-    .includes(search)
+(match.strHomeTeam || "")
+.toLowerCase()
+.includes(search)
 
-    ||
+||
 
-    (m.strAwayTeam || "")
-    .toLowerCase()
-    .includes(search);
+(match.strAwayTeam || "")
+.toLowerCase()
+.includes(search);
 
-    return leagueMatch && searchMatch;
+return leagueMatch && searchMatch;
 
-  });
+});
 
-  render(filtered);
+renderMatches(filtered);
 
 }
 
 function openMatch(id){
 
-  window.location.href =
-  "match.html?id=" + id;
+window.location.href =
+`match.html?id=${id}`;
 
 }
 
-function isLive(){
+function renderMatches(matches){
 
-  return new Date().getMinutes() % 2 === 0;
+const container =
+document.getElementById("matches");
 
-}
+if(!matches.length){
 
-function changeDay(day){
+container.innerHTML =
+`<div class="loading">لا توجد مباريات</div>`;
 
-  currentDay = day;
-
-  document
-  .querySelectorAll(".tabs button")
-  .forEach(btn=>btn.classList.remove("active"));
-
-  event.target.classList.add("active");
-
-  loadMatches();
+return;
 
 }
 
-function render(matches){
+container.innerHTML = matches.map(match=>{
 
-  if(!matches.length){
+const live =
+match.strStatus === "Live";
 
-    document.getElementById("matches").innerHTML =
-    `<div class="loading">لا توجد مباريات</div>`;
+return `
 
-    return;
+<div
+class="match-card ${live ? 'live-card' : ''}"
+onclick="openMatch('${match.idEvent}')"
+>
 
-  }
+${live
+? `<div class="live-badge">LIVE</div>`
+: ``}
 
-  document.getElementById("matches").innerHTML =
+<div class="league-name">
+🏆 ${match.strLeague}
+</div>
 
-  matches.map(m=>{
+<div class="match-teams">
 
-    const live = isLive();
+<div class="team">
 
-    return `
+<img
+src="${match.homeLogo}"
+onerror="this.src='${defaultLogo}'"
+>
 
-    <div
-      class="card ${live ? 'live-card' : ''}"
-      onclick="openMatch('${m.idEvent}')"
-    >
+<div class="team-name">
+${match.strHomeTeam}
+</div>
 
-      ${live
-      ? `<div class="live">LIVE</div>`
-      : ``}
+</div>
 
-      <div class="league">
-      🏆 ${m.strLeague}
-      </div>
+<div class="vs">
+VS
+</div>
 
-      <div class="teams">
+<div class="team">
 
-        <div class="team">
+<img
+src="${match.awayLogo}"
+onerror="this.src='${defaultLogo}'"
+>
 
-          <img
-          class="logo"
-          src="${m.homeLogo}"
-          onerror="this.src='${defaultLogo}'"
-          >
+<div class="team-name">
+${match.strAwayTeam}
+</div>
 
-          <div class="team-name">
-          ${m.strHomeTeam}
-          </div>
+</div>
 
-        </div>
+</div>
 
-        <div class="vs">
-        VS
-        </div>
+<div class="match-time">
+⏰ ${match.strTime || "غير محدد"}
+</div>
 
-        <div class="team">
+<div class="match-status">
 
-          <img
-          class="logo"
-          src="${m.awayLogo}"
-          onerror="this.src='${defaultLogo}'"
-          >
+${live
+? "🔥 المباراة جارية الآن"
+: "⌛ لم تبدأ بعد"}
 
-          <div class="team-name">
-          ${m.strAwayTeam}
-          </div>
+</div>
 
-        </div>
+</div>
 
-      </div>
+`;
 
-      <div class="time">
-      ⏰ ${m.strTime || "غير محدد"}
-      </div>
+}).join("");
 
-      <div class="status ${live ? 'live-status' : ''}">
-      ${live
-      ? "🔥 المباراة جارية الآن"
-      : "⌛ لم تبدأ بعد"}
-      </div>
+}
 
-    </div>
+function changeDay(day,button){
 
-    `;
+currentDay = day;
 
-  }).join("");
+document
+.querySelectorAll(".tabs button")
+.forEach(btn => btn.classList.remove("active"));
+
+button.classList.add("active");
+
+loadMatches();
 
 }
 
