@@ -6,18 +6,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Google Verification -->
-<meta name="google-site-verification" content="SAHILacznfUWreTXSTU44b_jSKLm3QtVd6n0D7liZwI"/>
-
 <!-- SEO -->
+<meta name="google-site-verification" content="SAHILacznfUWreTXSTU44b_jSKLm3QtVd6n0D7liZwI"/>
 <meta name="description" content="GOAL24+ | أحدث أخبار كرة القدم العالمية والمحلية، نتائج مباشرة، مباريات اليوم، فيديوهات وملخصات.">
-
 <meta name="keywords" content="كرة القدم, أخبار كرة القدم, مباريات اليوم, نتائج مباشرة, GOAL24+, football">
-
 <meta name="author" content="GOAL24+">
-
 <meta name="robots" content="index, follow">
 
+<!-- Open Graph -->
 <meta property="og:title" content="GOAL24+ | Football News">
 <meta property="og:description" content="أحدث أخبار كرة القدم العالمية والمحلية لحظة بلحظة">
 <meta property="og:image" content="https://images.unsplash.com/photo-1547347298-4074fc3086f0?q=80&w=1600&auto=format&fit=crop">
@@ -41,6 +37,7 @@
 --card:#101010;
 --text:#ffffff;
 --gray:#bdbdbd;
+--green:#00d26a;
 }
 
 *{
@@ -67,8 +64,6 @@ radial-gradient(circle at bottom left,rgba(255,0,0,.08),transparent 35%);
 z-index:-1;
 }
 
-/* Scrollbar */
-
 ::-webkit-scrollbar{
 width:8px;
 }
@@ -77,8 +72,6 @@ width:8px;
 background:var(--main);
 border-radius:20px;
 }
-
-/* Basic */
 
 a{
 text-decoration:none;
@@ -125,7 +118,7 @@ text-shadow:0 0 20px rgba(255,0,0,.4);
 }
 
 .logo span{
-color:#fff;
+color:white;
 }
 
 .nav-links{
@@ -354,7 +347,7 @@ color:#c6c6c6;
 line-height:2;
 }
 
-/* LIVE */
+/* LIVE SCORES */
 
 .live-wrapper{
 display:grid;
@@ -380,6 +373,11 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 margin-bottom:18px;
+}
+
+.live-status{
+color:var(--green);
+font-weight:700;
 }
 
 .live-dot{
@@ -441,7 +439,7 @@ color:var(--main);
 font-weight:700;
 }
 
-/* Trending */
+/* TRENDING */
 
 .trending{
 display:flex;
@@ -463,7 +461,7 @@ background:var(--main);
 transform:translateY(-3px);
 }
 
-/* Videos */
+/* VIDEOS */
 
 .videos{
 display:grid;
@@ -491,7 +489,7 @@ border:none;
 border-radius:16px;
 }
 
-/* Newsletter */
+/* NEWSLETTER */
 
 .newsletter{
 background:linear-gradient(135deg,#111,#1a0000);
@@ -527,7 +525,7 @@ outline:none;
 font-family:'Tajawal',sans-serif;
 }
 
-/* Footer */
+/* FOOTER */
 
 footer{
 background:#030303;
@@ -570,7 +568,7 @@ border-top:1px solid rgba(255,255,255,.05);
 color:#888;
 }
 
-/* Animation */
+/* ANIMATION */
 
 .fade-in{
 opacity:0;
@@ -600,7 +598,7 @@ transform:translateY(0);
 }
 }
 
-/* Tablet */
+/* TABLET */
 
 @media(max-width:900px){
 
@@ -629,7 +627,7 @@ font-size:3rem;
 
 }
 
-/* Mobile */
+/* MOBILE */
 
 @media(max-width:600px){
 
@@ -677,6 +675,7 @@ width:100%;
 }
 
 </style>
+
 </head>
 
 <body>
@@ -731,9 +730,9 @@ GOAL24<span>+</span>
 </button>
 </a>
 
-<a href="#matches">
+<a href="#live">
 <button class="btn btn-outline">
-المباريات اليوم
+النتائج المباشرة
 </button>
 </a>
 
@@ -855,7 +854,7 @@ GOAL24<span>+</span>
 
 </section>
 
-<!-- LIVE -->
+<!-- LIVE SCORES -->
 
 <section id="live">
 
@@ -865,40 +864,10 @@ GOAL24<span>+</span>
 النتائج المباشرة
 </h2>
 
-<div class="live-wrapper">
+<div class="live-wrapper" id="liveScores">
 
-<div class="live-card fade-in">
-
-<div class="live-top">
-<span>مباشر الآن</span>
-<div class="live-dot"></div>
-</div>
-
-<div class="teams">
-ليفربول<br>ضد<br>آرسنال
-</div>
-
-<div class="score">
-2 - 1
-</div>
-
-</div>
-
-<div class="live-card fade-in">
-
-<div class="live-top">
-<span>مباشر الآن</span>
-<div class="live-dot"></div>
-</div>
-
-<div class="teams">
-برشلونة<br>ضد<br>باريس سان جيرمان
-</div>
-
-<div class="score">
-1 - 1
-</div>
-
+<div class="live-card">
+<div class="teams">جاري تحميل النتائج المباشرة...</div>
 </div>
 
 </div>
@@ -1002,7 +971,9 @@ GOAL24<span>+</span>
 
 <div class="newsletter fade-in">
 
-<h2>اشترك في النشرة البريدية</h2>
+<h2>
+اشترك في النشرة البريدية
+</h2>
 
 <p>
 احصل على آخر أخبار كرة القدم مباشرة إلى بريدك الإلكتروني.
@@ -1080,12 +1051,16 @@ GOAL24<span>+</span>
 
 <script>
 
+/* MENU */
+
 const menuBtn=document.getElementById("menuBtn");
 const navLinks=document.getElementById("navLinks");
 
 menuBtn.onclick=()=>{
 navLinks.classList.toggle("active");
 };
+
+/* FADE */
 
 const fadeElements=document.querySelectorAll(".fade-in");
 
@@ -1105,6 +1080,8 @@ threshold:0.2
 
 fadeElements.forEach(el=>observer.observe(el));
 
+/* NAVBAR SCROLL */
+
 window.addEventListener("scroll",()=>{
 
 const nav=document.querySelector("nav");
@@ -1118,6 +1095,99 @@ nav.style.boxShadow="none";
 }
 
 });
+
+/* LIVE SCORES API */
+
+async function loadLiveScores(){
+
+const container=document.getElementById("liveScores");
+
+try{
+
+const response=await fetch("https://site.api.espn.com/apis/site/v2/sports/soccer/all/scoreboard");
+
+const data=await response.json();
+
+const games=data.events.slice(0,8);
+
+container.innerHTML="";
+
+games.forEach(game=>{
+
+const comp=game.competitions[0];
+
+const home=comp.competitors[0];
+const away=comp.competitors[1];
+
+const homeName=home.team.displayName;
+const awayName=away.team.displayName;
+
+const homeScore=home.score;
+const awayScore=away.score;
+
+const status=game.status.type.description;
+
+container.innerHTML+=`
+
+<div class="live-card fade-in">
+
+<div class="live-top">
+
+<span class="live-status">${status}</span>
+
+<div class="live-dot"></div>
+
+</div>
+
+<div class="teams">
+
+${homeName}
+
+<br>
+
+ضد
+
+<br>
+
+${awayName}
+
+</div>
+
+<div class="score">
+
+${homeScore} - ${awayScore}
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}catch(error){
+
+container.innerHTML=`
+
+<div class="live-card">
+
+<div class="teams">
+
+فشل تحميل النتائج المباشرة
+
+</div>
+
+</div>
+
+`;
+
+}
+
+}
+
+loadLiveScores();
+
+setInterval(loadLiveScores,60000);
 
 </script>
 
