@@ -6,18 +6,28 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- Google Verification -->
 <meta name="google-site-verification" content="SAHILacznfUWreTXSTU44b_jSKLm3QtVd6n0D7liZwI"/>
 
+<!-- SEO -->
 <meta name="description" content="GOAL24+ | أحدث أخبار كرة القدم العالمية والمحلية، نتائج مباشرة، مباريات اليوم، فيديوهات وملخصات.">
 
 <meta name="keywords" content="كرة القدم, أخبار كرة القدم, مباريات اليوم, نتائج مباشرة, GOAL24+, football">
 
 <meta name="author" content="GOAL24+">
 
+<meta name="robots" content="index, follow">
+
+<meta property="og:title" content="GOAL24+ | Football News">
+<meta property="og:description" content="أحدث أخبار كرة القدم العالمية والمحلية لحظة بلحظة">
+<meta property="og:image" content="https://images.unsplash.com/photo-1547347298-4074fc3086f0?q=80&w=1600&auto=format&fit=crop">
+<meta property="og:type" content="website">
+
 <title>GOAL24+ | Football News</title>
 
 <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/53/53283.png">
 
+<!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
@@ -57,6 +67,8 @@ radial-gradient(circle at bottom left,rgba(255,0,0,.08),transparent 35%);
 z-index:-1;
 }
 
+/* Scrollbar */
+
 ::-webkit-scrollbar{
 width:8px;
 }
@@ -65,6 +77,8 @@ width:8px;
 background:var(--main);
 border-radius:20px;
 }
+
+/* Basic */
 
 a{
 text-decoration:none;
@@ -232,7 +246,40 @@ color:white;
 background:var(--main);
 }
 
-/* SECTIONS */
+/* STATS */
+
+.stats{
+padding:40px 0;
+background:#0c0c0c;
+}
+
+.stats-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:25px;
+}
+
+.stat-box{
+background:#121212;
+padding:30px;
+border-radius:24px;
+text-align:center;
+border:1px solid rgba(255,255,255,.05);
+transition:.3s;
+}
+
+.stat-box:hover{
+transform:translateY(-8px);
+border-color:var(--main);
+}
+
+.stat-box h3{
+font-size:2.2rem;
+color:var(--main);
+margin-bottom:10px;
+}
+
+/* Sections */
 
 section{
 padding:90px 0;
@@ -394,7 +441,7 @@ color:var(--main);
 font-weight:700;
 }
 
-/* TRENDING */
+/* Trending */
 
 .trending{
 display:flex;
@@ -416,7 +463,7 @@ background:var(--main);
 transform:translateY(-3px);
 }
 
-/* VIDEOS */
+/* Videos */
 
 .videos{
 display:grid;
@@ -444,7 +491,43 @@ border:none;
 border-radius:16px;
 }
 
-/* FOOTER */
+/* Newsletter */
+
+.newsletter{
+background:linear-gradient(135deg,#111,#1a0000);
+padding:60px 20px;
+text-align:center;
+border-radius:30px;
+border:1px solid rgba(255,0,0,.2);
+}
+
+.newsletter h2{
+font-size:2rem;
+margin-bottom:15px;
+}
+
+.newsletter p{
+color:#ccc;
+margin-bottom:25px;
+}
+
+.newsletter form{
+display:flex;
+justify-content:center;
+gap:15px;
+flex-wrap:wrap;
+}
+
+.newsletter input{
+padding:15px;
+width:320px;
+border:none;
+border-radius:50px;
+outline:none;
+font-family:'Tajawal',sans-serif;
+}
+
+/* Footer */
 
 footer{
 background:#030303;
@@ -487,7 +570,7 @@ border-top:1px solid rgba(255,255,255,.05);
 color:#888;
 }
 
-/* ANIMATION */
+/* Animation */
 
 .fade-in{
 opacity:0;
@@ -517,7 +600,7 @@ transform:translateY(0);
 }
 }
 
-/* TABLET */
+/* Tablet */
 
 @media(max-width:900px){
 
@@ -546,135 +629,49 @@ font-size:3rem;
 
 }
 
-/* MOBILE */
+/* Mobile */
 
 @media(max-width:600px){
 
-html,body{
-overflow-x:hidden;
-}
-
 .container{
 width:94%;
-}
-
-nav{
-height:75px;
-padding:0 10px;
-}
-
-.nav-content{
-padding:14px 0;
 }
 
 .logo{
 font-size:1.5rem;
 }
 
-.menu-btn{
-font-size:2rem;
-}
-
-.nav-links{
-top:75px;
-gap:20px;
-}
-
 .hero{
 text-align:center;
 padding-top:90px;
-padding-bottom:50px;
-min-height:85vh;
-}
-
-.hero-content{
-max-width:100%;
 }
 
 .hero h1{
 font-size:2.2rem;
-line-height:1.6;
-}
-
-.hero p{
-font-size:.95rem;
-line-height:2;
 }
 
 .hero-btns{
 justify-content:center;
 }
 
-.btn{
-padding:13px 24px;
-font-size:.9rem;
-}
-
-section{
-padding:70px 0;
-}
-
-.section-title{
-font-size:1.7rem;
-margin-bottom:35px;
-}
-
 .news-grid,
 .live-wrapper,
-.videos{
+.videos,
+.stats-grid{
 grid-template-columns:1fr;
-gap:22px;
-}
-
-.news-card img{
-height:210px;
-}
-
-.news-content{
-padding:18px;
-}
-
-.news-content h3{
-font-size:1.1rem;
-}
-
-.news-content p{
-font-size:.92rem;
-}
-
-.live-card{
-padding:22px;
-}
-
-.teams{
-font-size:1rem;
-}
-
-.score{
-font-size:2.4rem;
-}
-
-.match-row{
-padding:18px;
-flex-direction:column;
-align-items:flex-start;
-}
-
-.match-teams{
-font-size:1rem;
-}
-
-.trend{
-padding:10px 16px;
-font-size:.85rem;
 }
 
 iframe{
 height:200px;
 }
 
-.footer-content{
-gap:25px;
+.newsletter form{
+flex-direction:column;
+align-items:center;
+}
+
+.newsletter input{
+width:100%;
 }
 
 }
@@ -683,6 +680,8 @@ gap:25px;
 </head>
 
 <body>
+
+<!-- NAVBAR -->
 
 <nav>
 
@@ -709,6 +708,8 @@ GOAL24<span>+</span>
 </div>
 
 </nav>
+
+<!-- HERO -->
 
 <header class="hero" id="home">
 
@@ -741,6 +742,42 @@ GOAL24<span>+</span>
 </div>
 
 </header>
+
+<!-- STATS -->
+
+<section class="stats">
+
+<div class="container">
+
+<div class="stats-grid">
+
+<div class="stat-box fade-in">
+<h3>500+</h3>
+<p>خبر يومي</p>
+</div>
+
+<div class="stat-box fade-in">
+<h3>120+</h3>
+<p>مباراة أسبوعياً</p>
+</div>
+
+<div class="stat-box fade-in">
+<h3>50K+</h3>
+<p>زائر شهرياً</p>
+</div>
+
+<div class="stat-box fade-in">
+<h3>24/7</h3>
+<p>تغطية مباشرة</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- NEWS -->
 
 <section id="news">
 
@@ -818,6 +855,8 @@ GOAL24<span>+</span>
 
 </section>
 
+<!-- LIVE -->
+
 <section id="live">
 
 <div class="container">
@@ -868,6 +907,8 @@ GOAL24<span>+</span>
 
 </section>
 
+<!-- MATCHES -->
+
 <section id="matches">
 
 <div class="container">
@@ -899,6 +940,8 @@ GOAL24<span>+</span>
 
 </section>
 
+<!-- TRENDING -->
+
 <section>
 
 <div class="container">
@@ -920,6 +963,8 @@ GOAL24<span>+</span>
 </div>
 
 </section>
+
+<!-- VIDEOS -->
 
 <section id="videos">
 
@@ -948,6 +993,38 @@ GOAL24<span>+</span>
 </div>
 
 </section>
+
+<!-- NEWSLETTER -->
+
+<section>
+
+<div class="container">
+
+<div class="newsletter fade-in">
+
+<h2>اشترك في النشرة البريدية</h2>
+
+<p>
+احصل على آخر أخبار كرة القدم مباشرة إلى بريدك الإلكتروني.
+</p>
+
+<form>
+
+<input type="email" placeholder="ادخل بريدك الإلكتروني">
+
+<button class="btn btn-primary">
+اشتراك
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- FOOTER -->
 
 <footer>
 
